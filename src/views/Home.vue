@@ -10,8 +10,12 @@
       <div class="row">
         <div class="col-md-9">
           <div class="feed-toggle">
-            <ul class="nav nav-pills outline-active">
-              <li v-if="isAuthenticated" class="nav-item">
+            <ul class="nav nav-pills outline-active" data-qa-id="feed-tabs">
+              <li
+                v-if="isAuthenticated"
+                class="nav-item"
+                data-qa-type="feed-tab"
+              >
                 <router-link
                   :to="{ name: 'home-my-feed' }"
                   class="nav-link"
@@ -20,7 +24,7 @@
                   Your Feed
                 </router-link>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" data-qa-type="feed-tab">
                 <router-link
                   :to="{ name: 'home' }"
                   exact
@@ -30,7 +34,7 @@
                   Global Feed
                 </router-link>
               </li>
-              <li class="nav-item" v-if="tag">
+              <li class="nav-item" v-if="tag" data-qa-type="feed-tab">
                 <router-link
                   :to="{ name: 'home-tag', params: { tag } }"
                   class="nav-link"

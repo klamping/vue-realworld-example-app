@@ -1,6 +1,12 @@
 <template>
-  <div>
-    <div v-if="isLoading" class="article-preview">Loading articles...</div>
+  <div data-qa-type="article-list">
+    <div
+      v-if="isLoading"
+      class="article-preview"
+      data-qa-id="article-loading-indicator"
+    >
+      Loading articles...
+    </div>
     <div v-else>
       <div v-if="articles.length === 0" class="article-preview">
         No articles are here... yet.
@@ -9,6 +15,7 @@
         v-for="(article, index) in articles"
         :article="article"
         :key="article.title + index"
+        data-qa-type="article-preview"
       />
       <VPagination :pages="pages" :currentPage.sync="currentPage" />
     </div>

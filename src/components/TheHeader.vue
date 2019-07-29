@@ -1,10 +1,14 @@
 <template>
-  <nav class="navbar navbar-light">
+  <nav class="navbar navbar-light" data-qa-id="site-header">
     <div class="container">
       <router-link class="navbar-brand" :to="{ name: 'home' }">
         conduit
       </router-link>
-      <ul v-if="!isAuthenticated" class="nav navbar-nav pull-xs-right">
+      <ul
+        v-if="!isAuthenticated"
+        class="nav navbar-nav pull-xs-right"
+        data-qa-id="site-nav"
+      >
         <li class="nav-item">
           <router-link
             class="nav-link"
@@ -36,7 +40,7 @@
           </router-link>
         </li>
       </ul>
-      <ul v-else class="nav navbar-nav pull-xs-right">
+      <ul v-else class="nav navbar-nav pull-xs-right" data-qa-id="site-nav">
         <li class="nav-item">
           <router-link
             class="nav-link"

@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <div class="container">
+    <div class="container" data-qa-id="site-footer">
       <router-link class="logo-font" :to="{ name: 'home', params: {} }">
         conduit
       </router-link>

@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-10 offset-md-1 col-xs-12">
           <RwvListErrors :errors="errors" />
-          <form v-on:submit.prevent="onPublish(article.slug);">
+          <form v-on:submit.prevent="onPublish(article.slug)">
             <fieldset :disabled="inProgress">
               <fieldset class="form-group">
                 <input
@@ -12,6 +12,7 @@
                   class="form-control form-control-lg"
                   v-model="article.title"
                   placeholder="Article Title"
+                  data-qa-id="editor-title"
                 />
               </fieldset>
               <fieldset class="form-group">
@@ -20,16 +21,22 @@
                   class="form-control"
                   v-model="article.description"
                   placeholder="What's this article about?"
+                  data-qa-id="editor-description"
                 />
               </fieldset>
               <fieldset class="form-group">
-                <textarea
-                  class="form-control"
-                  rows="8"
+                <mavon-editor
+                  :toolbars="{
+                    bold: true,
+                    italic: true,
+                    header: true,
+                    underline: true,
+                    strikethrough: true
+                  }"
                   v-model="article.body"
                   placeholder="Write your article (in markdown)"
-                >
-                </textarea>
+                  data-qa-id="editor-body"
+                />
               </fieldset>
               <fieldset class="form-group">
                 <input
@@ -37,7 +44,8 @@
                   class="form-control"
                   placeholder="Enter tags"
                   v-model="tagInput"
-                  v-on:keypress.enter.prevent="addTag(tagInput);"
+                  v-on:keypress.enter.prevent="addTag(tagInput)"
+                  data-qa-id="editor-tags"
                 />
                 <div class="tag-list">
                   <span
@@ -45,8 +53,7 @@
                     v-for="(tag, index) of article.tagList"
                     :key="tag + index"
                   >
-                    <i class="ion-close-round" v-on:click="removeTag(tag);">
-                    </i>
+                    <i class="ion-close-round" v-on:click="removeTag(tag)"> </i>
                     {{ tag }}
                   </span>
                 </div>
@@ -56,6 +63,7 @@
               :disabled="inProgress"
               class="btn btn-lg pull-xs-right btn-primary"
               type="submit"
+              data-qa-id="editor-publish"
             >
               Publish Article
             </button>
@@ -78,10 +86,12 @@ import {
   ARTICLE_EDIT_REMOVE_TAG,
   ARTICLE_RESET_STATE
 } from "@/store/actions.type";
+import { mavonEditor } from "mavon-editor";
+import "mavon-editor/dist/css/index.css";
 
 export default {
   name: "RwvArticleEdit",
-  components: { RwvListErrors },
+  components: { RwvListErrors, mavonEditor },
   props: {
     previousArticle: {
       type: Object,
@@ -108,20 +118,43 @@ export default {
     return next();
   },
   async beforeRouteLeave(to, from, next) {
-    await store.dispatch(ARTICLE_RESET_STATE);
-    next();
+    if (!this.isPublished) {
+      const answer = window.confirm(this.confirmMessage);
+      if (answer) {
+        next();
+      } else {
+        next(false);
+      }
+    } else {
+      await store.dispatch(ARTICLE_RESET_STATE);
+      next();
+    }
   },
   data() {
     return {
       tagInput: null,
       inProgress: false,
-      errors: {}
+      isPublished: false,
+      errors: {},
+      confirmMessage: "Do you really want to leave? You have unsaved changes!"
     };
+  },
+  created() {
+    window.addEventListener("beforeunload", this.preventUnload);
+  },
+  destroyed() {
+    window.removeEventListener("beforeunload", this.preventUnload);
   },
   computed: {
     ...mapGetters(["article"])
   },
   methods: {
+    preventUnload(e) {
+      // Cancel the event
+      e.preventDefault();
+      // Chrome requires returnValue to be set
+      e.returnValue = "";
+    },
     onPublish(slug) {
       let action = slug ? ARTICLE_EDIT : ARTICLE_PUBLISH;
       this.inProgress = true;
@@ -129,6 +162,7 @@ export default {
         .dispatch(action)
         .then(({ data }) => {
           this.inProgress = false;
+          this.isPublished = true;
           this.$router.push({
             name: "article",
             params: { slug: data.article.slug }

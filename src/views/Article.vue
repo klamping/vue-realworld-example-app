@@ -1,17 +1,24 @@
 <template>
-  <div class="article-page">
+  <div class="article-page" data-qa-id="article-page">
     <div class="banner">
       <div class="container">
-        <h1>{{ article.title }}</h1>
+        <h1 data-qa-id="article-title">{{ article.title }}</h1>
         <RwvArticleMeta :article="article" :actions="true"></RwvArticleMeta>
       </div>
     </div>
     <div class="container page">
       <div class="row article-content">
         <div class="col-xs-12">
-          <div v-html="parseMarkdown(article.body)"></div>
-          <ul class="tag-list">
-            <li v-for="(tag, index) of article.tagList" :key="tag + index">
+          <div
+            v-html="parseMarkdown(article.body)"
+            data-qa-id="article-body"
+          ></div>
+          <ul class="tag-list" data-qa-id="article-tags">
+            <li
+              v-for="(tag, index) of article.tagList"
+              :key="tag + index"
+              data-qa-type="article-tag"
+            >
               <RwvTag
                 :name="tag"
                 className="tag-default tag-pill tag-outline"

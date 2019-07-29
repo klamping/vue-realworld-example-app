@@ -2,9 +2,9 @@
   <div class="article-preview">
     <RwvArticleMeta isPreview :article="article" />
     <router-link :to="articleLink" class="preview-link">
-      <h1 v-text="article.title" />
-      <p v-text="article.description" />
-      <span>Read more...</span>
+      <h1 v-text="article.title" data-qa-type="preview-title" />
+      <p v-text="article.description" data-qa-type="preview-description" />
+      <span data-qa-type="preview-link">Read more...</span>
       <TagList :tags="article.tagList" />
     </router-link>
   </div>

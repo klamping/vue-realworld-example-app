@@ -12,11 +12,11 @@
           <ul v-if="errors" class="error-messages">
             <li v-for="(v, k) in errors" :key="k">{{ k }} {{ v | error }}</li>
           </ul>
-          <form v-on:submit.prevent="onSubmit(email, password);">
+          <form v-on:submit.prevent="onSubmit(email, password)">
             <fieldset class="form-group">
               <input
                 class="form-control form-control-lg"
-                type="text"
+                type="email"
                 v-model="email"
                 placeholder="Email"
               />

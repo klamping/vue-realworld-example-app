@@ -3,16 +3,19 @@
     <router-link
       :to="{ name: 'profile', params: { username: article.author.username } }"
     >
-      <img :src="article.author.image" />
+      <img :src="article.author.image" data-qa-type="author-avatar" />
     </router-link>
     <div class="info">
       <router-link
         :to="{ name: 'profile', params: { username: article.author.username } }"
         class="author"
+        data-qa-type="author-name"
       >
         {{ article.author.username }}
       </router-link>
-      <span class="date">{{ article.createdAt | date }}</span>
+      <span class="date" data-qa-type="article-date">{{
+        article.createdAt | date
+      }}</span>
     </div>
     <template v-if="actions">
       <rwv-article-actions
@@ -29,9 +32,12 @@
           'btn-primary': article.favorited,
           'btn-outline-primary': !article.favorited
         }"
+        data-qa-type="article-favorite"
       >
         <i class="ion-heart"></i>
-        <span class="counter"> {{ article.favoritesCount }} </span>
+        <span class="counter" data-qa-type="article-favorite-count">
+          {{ article.favoritesCount }}
+        </span>
       </button>
     </template>
   </div>
