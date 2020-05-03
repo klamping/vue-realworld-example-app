@@ -13,9 +13,9 @@
   },
   "description": "TodoMVC for the RealWorld™",
   "devDependencies": {
-    "@voerro/vue-tagsinput": "^1.11.2",
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
+    "@voerro/vue-tagsinput": "^1.11.2",
     "@vue/cli-plugin-babel": "^3.10.0",
     "@vue/cli-plugin-eslint": "^3.10.0",
     "@vue/cli-plugin-pwa": "^3.10.0",
@@ -25,6 +25,7 @@
     "@vue/test-utils": "^1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^24.9.0",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "lint-staged": "^8.2.1",
     "node-sass": "^4.12.0",
     "nyc": "^14.1.1",
