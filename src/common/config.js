@@ -4,7 +4,7 @@ const API_ENDPOINTS = {
   demo: "https://conduit-api.learnwebdriverio.com/api"
 };
 
-let apiEndpoint = process.env.API_ENDPOINT;
+let apiEndpoint = process.env["API_ENDPOINT"];
 
 // make sure proper endpoint option passed in
 if (!API_ENDPOINTS.hasOwnProperty(apiEndpoint)) {
