@@ -5,11 +5,12 @@
         <div class="row">
           <div class="col-xs-12 col-md-10 offset-md-1">
             <img :src="profile.image" class="user-img" />
-            <h4>{{ profile.username }}</h4>
+            <h4 data-qa-id="profile-username">{{ profile.username }}</h4>
             <p>{{ profile.bio }}</p>
             <div v-if="isCurrentUser()">
               <router-link
                 class="btn btn-sm btn-outline-secondary action-btn"
+                data-qa-id="follow-toggle"
                 :to="{ name: 'settings' }"
               >
                 <i class="ion-gear-a"></i> Edit Profile Settings
@@ -18,16 +19,18 @@
             <div v-else>
               <button
                 class="btn btn-sm btn-secondary action-btn"
+                data-qa-id="follow-toggle"
                 v-if="profile.following"
-                @click.prevent="unfollow();"
+                @click.prevent="unfollow()"
               >
                 <i class="ion-plus-round"></i> &nbsp;Unfollow
                 {{ profile.username }}
               </button>
               <button
                 class="btn btn-sm btn-outline-secondary action-btn"
+                data-qa-id="follow-toggle"
                 v-if="!profile.following"
-                @click.prevent="follow();"
+                @click.prevent="follow()"
               >
                 <i class="ion-plus-round"></i> &nbsp;Follow
                 {{ profile.username }}
@@ -42,8 +45,8 @@
       <div class="row">
         <div class="col-xs-12 col-md-10 offset-md-1">
           <div class="articles-toggle">
-            <ul class="nav nav-pills outline-active">
-              <li class="nav-item">
+            <ul class="nav nav-pills outline-active" data-qa-id="profile-tabs">
+              <li class="nav-item" data-qa-type="profile-tab">
                 <router-link
                   class="nav-link"
                   active-class="active"
@@ -53,7 +56,7 @@
                   My Articles
                 </router-link>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" data-qa-type="profile-tab">
                 <router-link
                   class="nav-link"
                   active-class="active"
